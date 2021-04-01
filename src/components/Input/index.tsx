@@ -3,14 +3,23 @@ import {
   useRef,
   useState,
   useCallback,
+  InputHTMLAttributes,
 } from 'react';
 
 import { useField } from '@unform/core';
 
 import { Container } from './styles';
+import React from 'react';
+import { IconBaseProps } from 'react-icons/lib';
 
-const Input = ({ name, icon: Icon, ...rest }) => {
-  const inputRef = useRef(null);
+
+interface IIpuntProps extends InputHTMLAttributes<HTMLInputElement>{
+  name: string;
+  icon?: React.ComponentType<IconBaseProps>
+}
+
+const Input = ({ name, icon: Icon, ...rest } : IIpuntProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [isFocused, setIsFocused] = useState(false);
   const [isFilled, setIsFilled] = useState(false);
@@ -44,7 +53,7 @@ const Input = ({ name, icon: Icon, ...rest }) => {
         onBlur={handleInputBlur}
         defaultValue={defaultValue}
         ref={inputRef}
-        {...rest}
+        {...rest} 
       />
     </Container>
   );

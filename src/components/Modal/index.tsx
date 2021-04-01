@@ -1,28 +1,31 @@
-import { Component } from 'react';
+
+import React from 'react';
+import { useState } from 'react';
+import { PropsWithChildren, useEffect } from 'react';
 import ReactModal from 'react-modal';
 
-class Modal extends Component {
-  constructor(props) {
-    super(props);
+interface IFoodPlate {
+  id: number;
+  name: string;
+  image: string;
+  price: string;
+  description: string;
+  available: boolean;
+}
+interface IModalProps {
+  children: any;
+  isOpen:boolean;
+  setIsOpen: () => void;
+}
 
-    const { isOpen } = this.props;
-    this.state = {
-      modalStatus: isOpen
-    }
-  }
 
-  componentDidUpdate(prevProps) {
-    const { isOpen } = this.props;
+const Modal = ({children, isOpen, setIsOpen}: IModalProps) => {
+  const [modalStatus, setModalStatus] = useState(isOpen)
 
-    if (prevProps.isOpen !== isOpen) {
-      console.log(this.props)
-      this.setState({ modalStatus: isOpen })
-    }
-  }
+  useEffect(()=>{
+    setModalStatus(isOpen)
+  },[isOpen])
 
-  render() {
-    const { children, setIsOpen } = this.props;
-    const { modalStatus } = this.state;
 
     return (
       <ReactModal
@@ -52,7 +55,7 @@ class Modal extends Component {
         {children}
       </ReactModal>
     );
-  }
+
 };
 
 export default Modal;
